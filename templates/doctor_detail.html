@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block title %}Doctor Detail{% endblock %}
+
+{% block content %}
+<div class="row g-4">
+    <div class="col-lg-4">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <div class="doctor-avatar mb-3">
+                    {{ doctor.first_name[0] }}{{ doctor.last_name[0] }}
+                </div>
+
+                <h2 class="h4">Dr. {{ doctor.first_name }} {{ doctor.last_name }}</h2>
+
+                <p>
+                    <strong>Specialties:</strong>
+                    {{ doctor.specialties|join(', ') if doctor.specialties else 'N/A' }}
+                </p>
+
+                <p>
+                    <strong>Languages:</strong>
+                    {{ doctor.languages|join(', ') if doctor.languages else 'N/A' }}
+                </p>
+
+                <p><strong>Email:</strong> {{ doctor.email or 'N/A' }}</p>
+                <p><strong>Phone:</strong> {{ doctor.phone or 'N/A' }}</p>
+
+                {% if session.get('patient_id') and suggested_visit_stage %}
+                    <div class="alert alert-info mt-3 mb-0">
+                        Suggested visit stage: <strong>{{ suggested_visit_stage }}</strong>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-8">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <h3 class="h5 mb-3">Available Time Slots</h3>
+
+                {% if slots %}
+                    <div class="row g-2">
+                        {% for slot in slots %}
+                            <div class="col-md-6 col-xl-4">
+                                {% if session.get('patient_id') %}
+                                    <a class="btn btn-outline-primary w-100 slot-btn"
+                                       href="{{ url_for('book_appointment', slot_id=slot.slot_id) }}">
+                                        {{ slot.slot_start.strftime('%a, %d %b %Y · %H:%M') }}
+                                    </a>
+                                {% else %}
+                                    <a class="btn btn-outline-secondary w-100 slot-btn"
+                                       href="{{ url_for('login') }}">
+                                        {{ slot.slot_start.strftime('%a, %d %b %Y · %H:%M') }}
+                                    </a>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="text-muted mb-0">No available time slots.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

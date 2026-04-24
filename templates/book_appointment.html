@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+
+{% block title %}Book Appointment{% endblock %}
+
+{% block content %}
+<div class="row g-4">
+    <div class="col-lg-4">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <h3 class="h5 mb-3">Selected Slot</h3>
+                <p><strong>Doctor:</strong> Dr. {{ slot.first_name }} {{ slot.last_name }}</p>
+                <p><strong>Start:</strong> {{ slot.slot_start.strftime('%a, %d %b %Y · %H:%M') }}</p>
+                <p><strong>End:</strong> {{ slot.slot_end.strftime('%a, %d %b %Y · %H:%M') }}</p>
+                <p class="mb-0"><strong>Suggested Visit Stage:</strong> {{ suggested_visit_stage }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-8">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <h2 class="h4 mb-4">Book Appointment</h2>
+
+                <form method="POST">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Visit Stage</label>
+                            <select class="form-select" name="visit_stage" required>
+                                <option value="first_visit" {% if suggested_visit_stage == 'first_visit' %}selected{% endif %}>First Visit</option>
+                                <option value="follow_up" {% if suggested_visit_stage == 'follow_up' %}selected{% endif %}>Follow-up</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Consultation Mode</label>
+                            <select class="form-select" name="consultation_mode" required>
+                                <option value="in_person">In-person</option>
+                                <option value="online">Online</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Purpose</label>
+                            <select class="form-select" name="purpose" required>
+                                <option value="consultation">Consultation</option>
+                                <option value="examination">Examination</option>
+                                <option value="test_review">Test Review</option>
+                                <option value="pre_surgery_consultation">Pre-surgery Consultation</option>
+                                <option value="post_surgery_follow_up">Post-surgery Follow-up</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Urgency</label>
+                            <select class="form-select" name="urgency" required>
+                                <option value="routine">Routine</option>
+                                <option value="emergency">Emergency</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="form-label">Reason for Visit</label>
+                            <textarea class="form-control" name="reason_for_visit" rows="3"></textarea>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Booked by Self?</label>
+                            <select class="form-select" name="booked_by_self">
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Booker Relationship</label>
+                            <input class="form-control" name="booker_relationship" placeholder="e.g. spouse, parent">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Referral Required?</label>
+                            <select class="form-select" name="referral_required">
+                                <option value="no">No</option>
+                                <option value="yes">Yes</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Referral Provided?</label>
+                            <select class="form-select" name="referral_provided">
+                                <option value="no">No</option>
+                                <option value="yes">Yes</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="form-label">Referring Doctor Name</label>
+                            <input class="form-control" name="referring_doctor_name">
+                        </div>
+
+                        <div class="col-md-12">
+                            <label class="form-label">Notes</label>
+                            <textarea class="form-control" name="notes" rows="2"></textarea>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary mt-4" type="submit">Confirm Booking</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+function toggleReferral() {
+    const val = document.querySelector('[name="referral_required"]').value;
+    const show = val === 'yes';
+    document.querySelector('[name="referral_provided"]').closest('.col-md-6').style.display = show ? '' : 'none';
+    document.querySelector('[name="referring_doctor_name"]').closest('.col-md-12').style.display = show ? '' : 'none';
+}
+document.querySelector('[name="referral_required"]').addEventListener('change', toggleReferral);
+toggleReferral(); 
+</script>
+{% endblock %}

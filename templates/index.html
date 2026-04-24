@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="hero-box mb-4">
+    <div class="row align-items-center">
+        <div class="col-lg-7">
+            <h1 class="display-5 fw-bold mb-3">Book and manage your medical appointments</h1>
+            <p class="lead text-muted">
+                Browse doctors, check available time slots, and manage your appointments in one place.
+            </p>
+            <div class="d-flex gap-2 mt-3">
+                <a class="btn btn-primary btn-lg" href="{{ url_for('doctors') }}">Browse Doctors</a>
+                {% if not session.get('patient_id') %}
+                    <a class="btn btn-outline-primary btn-lg" href="{{ url_for('login') }}">Login</a>
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-lg-5 mt-4 mt-lg-0">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <h5 class="mb-3">Available Specialties</h5>
+                    <div class="d-flex flex-wrap gap-2">
+                        {% for s in specialties %}
+                            <a href="{{ url_for('doctors', specialty_id=s.specialty_id) }}"
+   class="badge rounded-pill text-bg-light border px-3 py-2 text-decoration-none text-dark">
+   {{ s.specialty_name }}
+</a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

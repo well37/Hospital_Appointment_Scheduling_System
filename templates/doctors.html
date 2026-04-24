@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+{% block title %}Doctors{% endblock %}
+
+{% block content %}
+<div class="row g-4">
+    <div class="col-lg-3">
+        <div class="card shadow-sm border-0 mb-3">
+            <div class="card-body">
+                <h5 class="mb-3">Search</h5>
+                <form method="GET" action="{{ url_for('doctors') }}">
+                    <input type="hidden" name="specialty_id" value="{{ selected_specialty or '' }}">
+                    <input type="hidden" name="language_id" value="{{ selected_language or '' }}">
+                    <input class="form-control mb-2" type="text" name="keyword" placeholder="Doctor name" value="{{ keyword }}">
+                    <button class="btn btn-primary w-100" type="submit">Search</button>
+                    <a href="{{ url_for('doctors') }}" class="btn btn-outline-secondary w-100 mt-2">Clear Filters</a>
+                </form>
+            </div>
+        </div>
+
+        <div class="card shadow-sm border-0 mb-3">
+            <div class="card-body">
+                <h5 class="mb-3">Specialties</h5>
+                <a class="btn btn-sm btn-outline-secondary w-100 mb-2" href="{{ url_for('doctors') }}">All Specialties</a>
+                {% for s in specialties %}
+                    <a class="btn btn-sm {% if selected_specialty == s.specialty_id|string %}btn-primary{% else %}btn-outline-primary{% endif %} w-100 mb-2"
+                       href="{{ url_for('doctors',
+                            specialty_id=s.specialty_id,
+                            language_id=selected_language,
+                            keyword=keyword) }}">
+                        {{ s.specialty_name }}
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <h5 class="mb-3">Languages</h5>
+                <a class="btn btn-sm btn-outline-secondary w-100 mb-2" href="{{ url_for('doctors') }}">All Languages</a>
+                {% for l in languages %}
+                    <a class="btn btn-sm {% if selected_language == l.language_id|string %}btn-primary{% else %}btn-outline-primary{% endif %} w-100 mb-2"
+                       href="{{ url_for('doctors',
+                            specialty_id=selected_specialty,
+                            language_id=l.language_id,
+                            keyword=keyword) }}">
+                        {{ l.language_name }}
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-9">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2 class="mb-0">Available Doctors</h2>
+            <span class="text-muted">{{ doctors|length }} result(s)</span>
+        </div>
+
+        <div class="row g-3">
+            {% for doctor in doctors %}
+                <div class="col-md-6">
+                    <div class="card shadow-sm border-0 h-100 doctor-card">
+                        <div class="card-body">
+                            <div class="doctor-avatar mb-3">
+                                {{ doctor.first_name[0] }}{{ doctor.last_name[0] }}
+                            </div>
+
+                            <h5 class="card-title">Dr. {{ doctor.first_name }} {{ doctor.last_name }}</h5>
+
+                            <p class="mb-2">
+                                <strong>Specialties:</strong>
+                                {{ doctor.specialties|join(', ') if doctor.specialties else 'N/A' }}
+                            </p>
+
+                            <p class="mb-3">
+                                <strong>Languages:</strong>
+                                {{ doctor.languages|join(', ') if doctor.languages else 'N/A' }}
+                            </p>
+
+                            <a class="btn btn-primary" href="{{ url_for('doctor_detail', doctor_id=doctor.doctor_id) }}">
+                                View Details
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        {% if not doctors %}
+            <div class="alert alert-light border mt-3">
+                No doctors found.
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

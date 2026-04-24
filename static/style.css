@@ -1,0 +1,153 @@
+body {
+    background: #f0f4fa;
+    color: #1f2d3d;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+
+.brand-navbar {
+    background: linear-gradient(90deg, #1a46d4, #2f7cf6);
+    box-shadow: 0 2px 12px rgba(36, 87, 245, 0.15);
+}
+.brand-navbar .navbar-brand {
+    font-size: 1.2rem;
+    letter-spacing: -0.3px;
+}
+
+
+.container.py-4 {
+    padding-top: 2rem !important;
+    padding-bottom: 3rem !important;
+}
+
+
+.hero-box {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 2.5rem 2rem;
+    box-shadow: 0 8px 30px rgba(36, 87, 245, 0.07);
+    border: 1px solid #e2e8f4;
+}
+
+
+.card {
+    border-radius: 16px;
+    border: 1px solid #e2e8f4 !important;
+}
+.card-body {
+    padding: 1.4rem;
+}
+
+
+.doctor-card {
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+    cursor: pointer;
+}
+.doctor-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(36, 87, 245, 0.1) !important;
+    border-color: #2f7cf6 !important;
+}
+
+
+.doctor-avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: #e8f0ff;
+    color: #2457f5;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+
+
+.slot-btn {
+    border-radius: 10px;
+    padding: 0.65rem 0.5rem;
+    font-weight: 600;
+    font-size: 0.85rem;
+    transition: background 0.15s, color 0.15s;
+}
+
+
+.slot-option {
+    display: block;
+    background: #f8faff;
+    border: 1.5px solid #dbe5ff;
+    border-radius: 12px;
+    padding: 0.85rem 1rem;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+    font-size: 0.9rem;
+}
+.slot-option:hover {
+    background: #eef3ff;
+    border-color: #2f7cf6;
+}
+
+
+.badge {
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.4em 0.75em;
+    border-radius: 6px;
+}
+
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #2f7cf6;
+    box-shadow: 0 0 0 3px rgba(47, 124, 246, 0.15);
+}
+.form-label {
+    font-weight: 500;
+    font-size: 0.88rem;
+    margin-bottom: 0.35rem;
+}
+
+
+.btn-primary {
+    background: #2457f5;
+    border-color: #2457f5;
+    font-weight: 500;
+}
+.btn-primary:hover {
+    background: #1a46d4;
+    border-color: #1a46d4;
+}
+
+
+.alert {
+    border-radius: 10px;
+    font-size: 0.9rem;
+}
+
+
+.badge.rounded-pill {
+    font-size: 0.82rem;
+    padding: 0.45em 1em;
+    transition: background 0.15s;
+}
+.badge.rounded-pill:hover {
+    background: #dbe8ff !important;
+}
+
+
+.appointment-section h4 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #1a46d4;
+    border-bottom: 2px solid #e2e8f4;
+    padding-bottom: 0.5rem;
+}
+
+
+body::after {
+    content: '';
+    display: block;
+    height: 3rem;
+}

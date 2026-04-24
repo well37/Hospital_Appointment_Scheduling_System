@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+        <h2 class="mb-4">My Profile</h2>
+
+        <div class="row g-3 mb-4">
+            <div class="col-md-3">
+                <div class="card shadow-sm border-0 text-center h-100">
+                    <div class="card-body">
+                        <h6 class="text-muted">Total Appointments</h6>
+                        <h3>{{ stats.total_appointments or 0 }}</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card shadow-sm border-0 text-center h-100">
+                    <div class="card-body">
+                        <h6 class="text-muted">Upcoming</h6>
+                        <h3>{{ stats.upcoming_appointments or 0 }}</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card shadow-sm border-0 text-center h-100">
+                    <div class="card-body">
+                        <h6 class="text-muted">Cancelled</h6>
+                        <h3>{{ stats.cancelled_appointments or 0 }}</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card shadow-sm border-0 text-center h-100">
+                    <div class="card-body">
+                        <h6 class="text-muted">Most Visited Specialty</h6>
+                        <h6 class="mt-2">{{ most_visited_specialty or 'N/A' }}</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-4">
+                <form method="POST">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">First Name</label>
+                            <input class="form-control" value="{{ patient.first_name }}" disabled>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Last Name</label>
+                            <input class="form-control" value="{{ patient.last_name }}" disabled>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Date of Birth</label>
+                            <input class="form-control" value="{{ patient.date_of_birth }}" disabled>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Gender</label>
+                            <input class="form-control" value="{{ patient.gender }}" disabled>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Birth Country</label>
+                            <input class="form-control" value="{{ patient.birth_country }}" disabled>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Phone</label>
+                            <input class="form-control" name="phone" value="{{ patient.phone or '' }}">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Email</label>
+                            <input class="form-control" type="email" name="email" value="{{ patient.email or '' }}">
+                        </div>
+
+                        <div class="col-md-8">
+                            <label class="form-label">Address</label>
+                            <input class="form-control" name="address" value="{{ patient.address or '' }}">
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Preferred Language</label>
+                            <input class="form-control" name="preferred_language" value="{{ patient.preferred_language or '' }}">
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary mt-4" type="submit">Save Changes</button>
+                </form>
+            </div>
+        </div>
+<!-- Danger Zone -->
+        <div class="card shadow-sm border-0 mt-4 border-danger">
+            <div class="card-body p-4">
+                <h6 class="text-danger mb-1">Danger Zone</h6>
+                <p class="text-muted small mb-3">
+                    Deleting your account is permanent. All your appointments
+                    and personal data will be removed and cannot be recovered.
+                </p>
+                <button type="button"
+                        class="btn btn-outline-danger btn-sm"
+                        data-bs-toggle="modal"
+                        data-bs-target="#deleteModal">
+                    Delete my account
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Confirmation modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-danger">Delete account</h5>
+                <button type="button" class="btn-close"
+                        data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to <strong>permanently delete</strong>
+                your account? This will remove all your appointments and
+                personal data. This action <strong>cannot be undone</strong>.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary"
+                        data-bs-dismiss="modal">
+                    Cancel
+                </button>
+                <form method="POST"
+                      action="{{ url_for('delete_account') }}">
+                    <button type="submit" class="btn btn-danger">
+                        Yes, delete my account
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

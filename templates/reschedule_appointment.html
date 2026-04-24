@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Reschedule Appointment{% endblock %}
+
+{% block content %}
+<div class="row g-4">
+    <div class="col-lg-4">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <h3 class="h5 mb-3">Current Appointment</h3>
+                <p><strong>Current Slot:</strong></p>
+                <p>{{ appointment.slot_start }} → {{ appointment.slot_end }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-8">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <h2 class="h4 mb-4">Choose a New Slot</h2>
+
+                {% if available_slots %}
+                    <form method="POST">
+                        <div class="row g-3">
+                            {% for slot in available_slots %}
+                                <div class="col-md-6">
+                                    <label class="slot-option w-100">
+                                        <input class="form-check-input me-2" type="radio" name="new_slot_id" value="{{ slot.slot_id }}" required>
+                                        {{ slot.slot_start.strftime('%a, %d %b %Y · %H:%M') }} → {{ slot.slot_end.strftime('%a, %d %b %Y · %H:%M') }}
+                                    </label>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <button class="btn btn-primary mt-4" type="submit">Confirm Reschedule</button>
+                    </form>
+                {% else %}
+                    <p class="text-muted mb-0">No alternative slots are available.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
